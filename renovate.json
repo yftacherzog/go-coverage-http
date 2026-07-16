@@ -1,0 +1,15 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "enabledManagers": ["tekton"],
+  "tekton": {
+    "managerFilePatterns": ["/^\\.tekton/.*\\.ya?ml$/"]
+  },
+  "packageRules": [
+    {
+      "matchPackageNames": [
+        "quay.io/konflux-ci/konflux-vanguard/task-rpms-signature-scan"
+      ],
+      "replacementName": "quay.io/konflux-ci/tekton-catalog/task-rpms-signature-scan"
+    }
+  ]
+}
