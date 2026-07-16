@@ -1,0 +1,43 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "enabledManagers": ["tekton"],
+  "tekton": {
+    "managerFilePatterns": ["/^\\.tekton/.*\\.ya?ml$/"]
+  },
+  "packageRules": [
+    {
+      "description": "Group normal digest/version updates for Konflux task bundles",
+      "matchPackageNames": [
+        "/^quay.io/konflux-ci/tekton-catalog//",
+        "/^quay.io/konflux-ci/konflux-vanguard//"
+      ],
+      "matchUpdateTypes": ["digest", "pin", "pinDigest", "patch", "minor", "major"],
+      "branchPrefix": "konflux/references/",
+      "groupName": "Konflux references",
+      "group": {
+        "commitMessageTopic": "Konflux references"
+      }
+    },
+    {
+      "description": "Group package renames separately from digest/version updates",
+      "matchPackageNames": [
+        "/^quay.io/konflux-ci/konflux-vanguard//"
+      ],
+      "matchUpdateTypes": ["replacement"],
+      "branchPrefix": "konflux/references-replacement/",
+      "groupName": "Konflux references replacement",
+      "group": {
+        "commitMessageTopic": "{{depName}} references",
+        "commitMessageExtra": "",
+        "commitBody": "konflux-vanguard is no longer updated for Tekton tasks that moved to\ntekton-catalog; replace the references with equivalent\nkonflux-ci/tekton-catalog references"
+      }
+    },
+    {
+      "description": "Rename rpms-signature-scan from konflux-vanguard to tekton-catalog",
+      "matchPackageNames": [
+        "quay.io/konflux-ci/konflux-vanguard/task-rpms-signature-scan"
+      ],
+      "replacementName": "quay.io/konflux-ci/tekton-catalog/task-rpms-signature-scan"
+    }
+  ]
+}
